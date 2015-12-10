@@ -1,7 +1,7 @@
 <html>
 <head>
+<link rel="stylesheet" href="main.css">
 <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
-<link rel="stylesheet" type="text/css" href="main.css" />
 <script type="text/javascript" src="lodash.min.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 <script>
@@ -9,7 +9,7 @@ var clientID='d17dccd820403c76773113e9785dea5a';
 var globalPlayer;
 SC.initialize({
   client_id: 'd17dccd820403c76773113e9785dea5a'
-  //redirect_uri: 'http://example.com/callback'
+  //redirect_uri: 'http://example.com/callback' --NOT NEEDED FOR PUBLIC FUNCTIONS
 });
 
 // initiate auth popup
@@ -21,30 +21,38 @@ SC.get('playlists/23509158?client_id='+clientID).then(function(response) {
 }).value();
 
 $('.track').on('click', function(){
-console.log(this.id);
+console.log("playing "+this.id);
 
 SC.stream('tracks/'+this.id).then(function(player){
   globalPlayer = player;
   globalPlayer.play();
 
-});
-});
-
+}); 
 });
 
+});
 
+//register global event handlers
+$(document).ready(function(){
 
 $('#pause').on('click',function(){
-	console.log("test")
-
-	globalPlayer.pause();
+	console.log("pausing")
+	if(globalPlayer){
+	globalPlayer.toggle();
+}
 });
+
+});
+
+
 
 </script>
 </head>
 <body>
+<div id="trackContainer">
 <ul id="tracklist">
 </ul>
+</div>
 <div id="controls">
 	 <ul>
 	 <li id="pause">Pause</li>
