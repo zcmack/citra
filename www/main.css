@@ -1,3 +1,11 @@
 	.playcount{
 		float:right;
 	}
+
+	.playing{
+		background-color:green;
+	}
+
+	.playing.paused{
+		background-color:red;
+	}
